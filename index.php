@@ -32,8 +32,14 @@ spl_autoload_register(function ($class_name) {
 $model = new Page($db);
 $controller = new pageController($model);
 
-// Get page ID from query string
-$pageId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+// Get page identifier from query string
+if (isset($_GET['id'])) {
+    $identifier = $_GET['id'];
+} elseif (isset($_GET['friendly'])) {
+    $identifier = $_GET['friendly'];
+} else {
+    $identifier = 1; // Default page ID
+}
 
 // Display the page
-$controller->displayPage($pageId);
+$controller->displayPage($identifier);
