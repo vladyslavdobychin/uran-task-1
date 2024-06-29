@@ -35,11 +35,10 @@ $controller = new pageController($model);
 // Get page identifier from query string
 if (isset($_GET['id'])) {
     $identifier = $_GET['id'];
+    $controller->displayPage($identifier);
 } elseif (isset($_GET['friendly'])) {
     $identifier = $_GET['friendly'];
+    $controller->displayPage($identifier);
 } else {
-    $identifier = 1; // Default page ID
+    $controller->displayHomePage();
 }
-
-// Display the page
-$controller->displayPage($identifier);

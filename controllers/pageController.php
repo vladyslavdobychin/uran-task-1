@@ -32,4 +32,20 @@ class pageController
         }
         include 'views/pageTemplate.php';
     }
+
+    public function displayHomePage() {
+        // Fetch the home page content
+        $homePage = $this->model->getPageByFriendly('home');
+
+        $title = $homePage['title'];
+        $description = $homePage['description'];
+
+        // Fetch all pages except the home page
+        $pages = array_filter($this->model->getAllPages(), function($page) {
+            return $page['friendly'] !== 'home';
+        });
+
+        // Include the template
+        include 'views/homeTemplate.php';
+    }
 }
