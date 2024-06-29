@@ -9,14 +9,24 @@ class pageController
         $this->model = $model;
     }
 
-    public function displayPage($id) {
-        $page = $this->model->getPageById($id);
+    public function displayPage($identifier) {
+        // Check if identifier is numeric
+        if (is_numeric($identifier)) {
+            $page = $this->model->getPageById($identifier);
+            if ($page) {
+                // Redirect to friendly URL if accessed by ID
+                $friendlyUrl = '/' . $page['friendly'];
+                header('Location: ' . $friendlyUrl);
+                exit;
+            }
+        } else {
+            $page = $this->model->getPageByFriendly($identifier);
+        }
 
         if ($page) {
             $title = $page['title'];
             $description = $page['description'];
-        }
-        else {
+        } else {
             $title = 'Page not found';
             $description = 'This page does not exist.';
         }

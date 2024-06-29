@@ -7,3 +7,8 @@ CREATE TABLE IF NOT EXISTS pages (
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL
     );
+
+INSERT INTO pages (friendly, title, description) VALUES
+    ('home', 'Home Page', 'Welcome to the home page.'),
+    ('about', 'About Us', 'Learn more about us on this page.'),
+    ('contact', 'Contact Us', 'Get in touch with us through this page.');

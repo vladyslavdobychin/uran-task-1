@@ -20,6 +20,13 @@ class Page {
         return $sqlQuery->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getPageByFriendly($friendly) {
+        $stmt = $this->db->prepare("SELECT * FROM pages WHERE friendly = :friendly");
+        $stmt->bindParam(':friendly', $friendly, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function createPage($title, $friendly, $description) {
         $sqlQuery = $this->db->prepare("INSERT INTO pages (title, friendly, description) VALUES (:title, :friendly, :description)");
         $sqlQuery->bindParam(':title', $title);
