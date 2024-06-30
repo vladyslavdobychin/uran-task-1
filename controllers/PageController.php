@@ -27,13 +27,8 @@ class PageController
         $homePage = $this->model->getPageByFriendly('home');
         $pages = $this->model->getAllPagesExceptHome();
 
-        if ($homePage) {
-            $title = $homePage['title'];
-            $description = $homePage['description'];
-        } else {
-            $title = 'Home Page';
-            $description = 'Welcome, it\'s a home screen ya know';
-        }
+        $title = $homePage['title'];
+        $description = $homePage['description'];
 
         include 'views/homeTemplate.php';
     }
@@ -50,7 +45,7 @@ class PageController
             $friendly = $_POST['friendly'];
             $description = $_POST['description'];
             $this->model->createPage($title, $friendly, $description);
-            redirect('/home');
+            $this->performRedirect('/home');
         } else {
             $this->createPageForm(); // Handle GET request by displaying the form
         }
@@ -74,7 +69,7 @@ class PageController
             $friendly = $_POST['friendly'];
             $description = $_POST['description'];
             $this->model->updatePage($id, $friendly, $title, $description);
-            redirect('/home');
+            $this->performRedirect('/home');
         } else {
             $this->displayHomePage(); // Handle GET request by displaying the home page
         }
@@ -86,7 +81,7 @@ class PageController
             $id = $_GET['id'];
             $this->model->deletePage($id);
         }
-        redirect('/home');
+        $this->performRedirect('/home');
     }
 
     private function getPageByIdOrFriendly($identifier)
@@ -96,9 +91,7 @@ class PageController
 
             if ($page) {
                 // Redirect to friendly URL if accessed by ID
-                $friendlyUrl = '/' . $page['friendly'];
-                header('Location: ' . $friendlyUrl);
-                exit;
+                $this->performRedirect('/' . $page['friendly']);
             }
         } else {
             return $this->model->getPageByFriendly($identifier);
@@ -112,5 +105,11 @@ class PageController
         $title = 'Page not found';
         $description = 'This page does not exist.';
         include 'views/notFoundTemplate.php';
+    }
+
+    public function performRedirect($url)
+    {
+        header("Location: $url");
+        exit;
     }
 }
