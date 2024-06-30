@@ -1,4 +1,9 @@
 <?php
+
+if (!defined('PHPUNIT_TESTING')) {
+    define('PHPUNIT_TESTING', false);
+}
+
 const DSN = 'mysql:host=db;dbname=task_1_database';
 const DB_USER = 'task_1_user';
 const DB_PASSWORD = 'task_1_password';
@@ -26,3 +31,6 @@ function autoloadClasses($class_name) {
         }
     }
 }
+
+// Get the database connection
+$pdo = getDatabaseConnection();
