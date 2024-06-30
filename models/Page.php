@@ -21,16 +21,16 @@ class Page {
     }
 
     public function getPageByFriendly($friendly) {
-        $stmt = $this->db->prepare("SELECT * FROM pages WHERE friendly = :friendly");
-        $stmt->bindParam(':friendly', $friendly, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $sqlQuery = $this->db->prepare("SELECT * FROM pages WHERE friendly = :friendly");
+        $sqlQuery->bindParam(':friendly', $friendly, PDO::PARAM_STR);
+        $sqlQuery->execute();
+        return $sqlQuery->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getAllPagesExceptHome() {
-        $stmt = $this->db->prepare("SELECT * FROM pages WHERE friendly <> 'home'");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sqlQuery = $this->db->prepare("SELECT * FROM pages WHERE friendly <> 'home'");
+        $sqlQuery->execute();
+        return $sqlQuery->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function createPage($title, $friendly, $description) {
@@ -42,17 +42,17 @@ class Page {
     }
 
     public function updatePage($id, $friendly, $title, $description) {
-        $stmt = $this->db->prepare("UPDATE pages SET friendly = :friendly, title = :title, description = :description WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':friendly', $friendly);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':description', $description);
-        return $stmt->execute();
+        $sqlQuery = $this->db->prepare("UPDATE pages SET friendly = :friendly, title = :title, description = :description WHERE id = :id");
+        $sqlQuery->bindParam(':id', $id, PDO::PARAM_INT);
+        $sqlQuery->bindParam(':friendly', $friendly);
+        $sqlQuery->bindParam(':title', $title);
+        $sqlQuery->bindParam(':description', $description);
+        return $sqlQuery->execute();
     }
 
     public function deletePage($id) {
-        $stmt = $this->db->prepare("DELETE FROM pages WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        $sqlQuery = $this->db->prepare("DELETE FROM pages WHERE id = :id");
+        $sqlQuery->bindParam(':id', $id, PDO::PARAM_INT);
+        return $sqlQuery->execute();
     }
 }
