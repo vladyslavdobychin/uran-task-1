@@ -37,15 +37,20 @@ class pageController
         // Fetch the home page content
         $homePage = $this->model->getPageByFriendly('home');
 
-        $title = $homePage['title'];
-        $description = $homePage['description'];
+        if ($homePage) {
+            $title = $homePage['title'];
+            $description = $homePage['description'];
+        } else {
+            // Fallback values just in case
+            $title = 'Home Page';
+            $description = 'Welcome, it\'s a home screen ya know';
+        }
 
         // Fetch all pages except the home page
         $pages = array_filter($this->model->getAllPages(), function($page) {
             return $page['friendly'] !== 'home';
         });
 
-        // Include the template
         include 'views/homeTemplate.php';
     }
 }
