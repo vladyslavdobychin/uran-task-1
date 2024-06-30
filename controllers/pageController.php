@@ -16,12 +16,10 @@ class PageController
         if ($page) {
             $title = $page['title'];
             $description = $page['description'];
+            include 'views/pageTemplate.php';
         } else {
-            $title = 'Page not found';
-            $description = 'This page does not exist.';
+            $this->displayNotFoundPage();
         }
-
-        include 'views/pageTemplate.php';
     }
 
     public function displayHomePage()
@@ -40,6 +38,57 @@ class PageController
         include 'views/homeTemplate.php';
     }
 
+    public function createPageForm()
+    {
+        include 'views/createPageForm.php';
+    }
+
+    public function createPage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'];
+            $friendly = $_POST['friendly'];
+            $description = $_POST['description'];
+            $this->model->createPage($title, $friendly, $description);
+            redirect('/home');
+        } else {
+            $this->createPageForm(); // Handle GET request by displaying the form
+        }
+    }
+
+    public function updatePageForm($id)
+    {
+        $page = $this->model->getPageById($id);
+        if ($page) {
+            include 'views/updatePageForm.php';
+        } else {
+            $this->displayNotFoundPage();
+        }
+    }
+
+    public function updatePage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $friendly = $_POST['friendly'];
+            $description = $_POST['description'];
+            $this->model->updatePage($id, $friendly, $title, $description);
+            redirect('/home');
+        } else {
+            $this->displayHomePage(); // Handle GET request by displaying the home page
+        }
+    }
+
+    public function deletePage()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $this->model->deletePage($id);
+        }
+        redirect('/home');
+    }
+
     private function getPageByIdOrFriendly($identifier)
     {
         if (is_numeric($identifier)) {
@@ -56,5 +105,12 @@ class PageController
         }
 
         return null;
+    }
+
+    private function displayNotFoundPage()
+    {
+        $title = 'Page not found';
+        $description = 'This page does not exist.';
+        include 'views/notFoundTemplate.php';
     }
 }
