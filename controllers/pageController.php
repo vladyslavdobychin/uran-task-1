@@ -16,12 +16,10 @@ class PageController
         if ($page) {
             $title = $page['title'];
             $description = $page['description'];
+            include 'views/pageTemplate.php';
         } else {
-            $title = 'Page not found';
-            $description = 'This page does not exist.';
+            $this->displayNotFoundPage();
         }
-
-        include 'views/pageTemplate.php';
     }
 
     public function displayHomePage()
@@ -83,5 +81,12 @@ class PageController
         }
 
         return null;
+    }
+
+    private function displayNotFoundPage()
+    {
+        $title = 'Page not found';
+        $description = 'This page does not exist.';
+        include 'views/notFoundTemplate.php';
     }
 }
