@@ -35,19 +35,43 @@ class PageControllerTest extends TestCase
 
     public function testDisplayPage()
     {
+        // Mock the performRedirect function
+        $this->controller = $this->getMockBuilder(PageController::class)
+            ->setConstructorArgs([$this->page])
+            ->onlyMethods(['performRedirect'])
+            ->getMock();
+
+        $this->controller->expects($this->any())
+            ->method('performRedirect')
+            ->will($this->returnValue(true));
+
+        // Test with a valid identifier
         ob_start();
-        $this->controller->displayPage(2);
+        $this->controller->displayPage('about');
         $output = ob_get_clean();
 
         $this->assertStringContainsString('About Us', $output);
         $this->assertStringContainsString('Learn more about us on this page.', $output);
     }
 
+
+
     public function testCreatePage()
     {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['title'] = 'Test Page';
         $_POST['friendly'] = 'test-page';
         $_POST['description'] = 'This is a test page.';
+
+        // Mock the performRedirect function
+        $this->controller = $this->getMockBuilder(PageController::class)
+            ->setConstructorArgs([$this->page])
+            ->onlyMethods(['performRedirect'])
+            ->getMock();
+
+        $this->controller->expects($this->any())
+            ->method('performRedirect')
+            ->will($this->returnValue(true));
 
         ob_start();
         $this->controller->createPage();
@@ -56,4 +80,5 @@ class PageControllerTest extends TestCase
         $page = $this->page->getPageByFriendly('test-page');
         $this->assertEquals('Test Page', $page['title']);
     }
+
 }
