@@ -94,3 +94,17 @@ form textarea {
 .back-button:hover {
     background-color: #5a6268;
 }
+
+.delete-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}

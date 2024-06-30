@@ -18,6 +18,10 @@ function handleRequest($controller) {
             $controller->createPage();
             break;
 
+        case $normalizedUri === '/deletePage':
+            $controller->deletePage();
+            break;
+
         case isset($_GET['id']):
             $identifier = $_GET['id'];
             $controller->displayPage($identifier);

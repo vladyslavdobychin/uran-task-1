@@ -58,6 +58,15 @@ class PageController
         }
     }
 
+    public function deletePage()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $this->model->deletePage($id);
+        }
+        redirect('/home');
+    }
+
     private function getPageByIdOrFriendly($identifier)
     {
         if (is_numeric($identifier)) {

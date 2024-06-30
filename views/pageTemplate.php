@@ -11,7 +11,10 @@
     <div class="container">
         <h1><?php echo htmlspecialchars($title); ?></h1>
         <p><?php echo htmlspecialchars($description); ?></p>
-        <button class="back-button" onclick="window.location.href='/home'">Back</button>
+        <div class="form-buttons">
+            <button class="back-button" onclick="window.location.href='/home'">Back</button>
+            <button class="delete-button" onclick="window.location.href='/deletePage?id=<?php echo $page['id']; ?>'">Delete</button>
+        </div>
     </div>
 </div>
 </body>
