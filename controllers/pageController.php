@@ -43,9 +43,18 @@ class PageController
     private function getPageByIdOrFriendly($identifier)
     {
         if (is_numeric($identifier)) {
-            return $this->model->getPageById($identifier);
+            $page = $this->model->getPageById($identifier);
+
+            if ($page) {
+                // Redirect to friendly URL if accessed by ID
+                $friendlyUrl = '/' . $page['friendly'];
+                header('Location: ' . $friendlyUrl);
+                exit;
+            }
         } else {
             return $this->model->getPageByFriendly($identifier);
         }
+
+        return null;
     }
 }
