@@ -13,6 +13,7 @@
         <p><?php echo htmlspecialchars($description); ?></p>
         <div class="form-buttons">
             <button class="back-button" onclick="window.location.href='/home'">Back</button>
+            <button class="update-button" onclick="window.location.href='/updatePageForm?id=<?php echo $page['id']; ?>'">Update</button>
             <button class="delete-button" onclick="window.location.href='/deletePage?id=<?php echo $page['id']; ?>'">Delete</button>
         </div>
     </div>

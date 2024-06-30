@@ -56,6 +56,30 @@ class PageController
         }
     }
 
+    public function updatePageForm($id)
+    {
+        $page = $this->model->getPageById($id);
+        if ($page) {
+            include 'views/updatePageForm.php';
+        } else {
+            $this->displayNotFoundPage();
+        }
+    }
+
+    public function updatePage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $friendly = $_POST['friendly'];
+            $description = $_POST['description'];
+            $this->model->updatePage($id, $friendly, $title, $description);
+            redirect('/home');
+        } else {
+            $this->displayHomePage(); // Handle GET request by displaying the home page
+        }
+    }
+
     public function deletePage()
     {
         if (isset($_GET['id'])) {

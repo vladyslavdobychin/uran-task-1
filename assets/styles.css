@@ -108,3 +108,18 @@ form textarea {
 .delete-button:hover {
     background-color: #c82333;
 }
+
+.update-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: #e0a800;
+}

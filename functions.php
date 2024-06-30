@@ -22,6 +22,14 @@ function handleRequest($controller) {
             $controller->deletePage();
             break;
 
+        case $normalizedUri === '/updatePageForm' && isset($_GET['id']):
+            $controller->updatePageForm($_GET['id']);
+            break;
+
+        case $normalizedUri === '/updatePage':
+            $controller->updatePage();
+            break;
+
         case isset($_GET['id']):
             $identifier = $_GET['id'];
             $controller->displayPage($identifier);
