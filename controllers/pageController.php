@@ -1,6 +1,6 @@
 <?php
 
-class pageController
+class PageController
 {
     private $model;
 
@@ -9,19 +9,9 @@ class pageController
         $this->model = $model;
     }
 
-    public function displayPage($identifier) {
-        // Check if identifier is numeric
-        if (is_numeric($identifier)) {
-            $page = $this->model->getPageById($identifier);
-            if ($page) {
-                // Redirect to friendly URL if accessed by ID
-                $friendlyUrl = '/' . $page['friendly'];
-                header('Location: ' . $friendlyUrl);
-                exit;
-            }
-        } else {
-            $page = $this->model->getPageByFriendly($identifier);
-        }
+    public function displayPage($identifier)
+    {
+        $page = $this->getPageByIdOrFriendly($identifier);
 
         if ($page) {
             $title = $page['title'];
@@ -30,6 +20,32 @@ class pageController
             $title = 'Page not found';
             $description = 'This page does not exist.';
         }
+
         include 'views/pageTemplate.php';
+    }
+
+    public function displayHomePage()
+    {
+        $homePage = $this->model->getPageByFriendly('home');
+        $pages = $this->model->getAllPagesExceptHome();
+
+        if ($homePage) {
+            $title = $homePage['title'];
+            $description = $homePage['description'];
+        } else {
+            $title = 'Home Page';
+            $description = 'Welcome, it\'s a home screen ya know';
+        }
+
+        include 'views/homeTemplate.php';
+    }
+
+    private function getPageByIdOrFriendly($identifier)
+    {
+        if (is_numeric($identifier)) {
+            return $this->model->getPageById($identifier);
+        } else {
+            return $this->model->getPageByFriendly($identifier);
+        }
     }
 }
