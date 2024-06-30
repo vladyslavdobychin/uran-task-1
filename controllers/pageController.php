@@ -40,6 +40,24 @@ class PageController
         include 'views/homeTemplate.php';
     }
 
+    public function createPageForm()
+    {
+        include 'views/createPageForm.php';
+    }
+
+    public function createPage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'];
+            $friendly = $_POST['friendly'];
+            $description = $_POST['description'];
+            $this->model->createPage($title, $friendly, $description);
+            redirect('/home');
+        } else {
+            $this->createPageForm(); // Handle GET request by displaying the form
+        }
+    }
+
     private function getPageByIdOrFriendly($identifier)
     {
         if (is_numeric($identifier)) {

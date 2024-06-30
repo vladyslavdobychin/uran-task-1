@@ -10,6 +10,14 @@ function handleRequest($controller) {
     $normalizedUri = strtok($requestUri, '?');
 
     switch (true) {
+        case $normalizedUri === '/createPageForm':
+            $controller->createPageForm();
+            break;
+
+        case $normalizedUri === '/createPage':
+            $controller->createPage();
+            break;
+
         case isset($_GET['id']):
             $identifier = $_GET['id'];
             $controller->displayPage($identifier);
