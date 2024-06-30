@@ -27,13 +27,8 @@ class PageController
         $homePage = $this->model->getPageByFriendly('home');
         $pages = $this->model->getAllPagesExceptHome();
 
-        if ($homePage) {
-            $title = $homePage['title'];
-            $description = $homePage['description'];
-        } else {
-            $title = 'Home Page';
-            $description = 'Welcome, it\'s a home screen ya know';
-        }
+        $title = $homePage['title'];
+        $description = $homePage['description'];
 
         include 'views/homeTemplate.php';
     }
