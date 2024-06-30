@@ -27,6 +27,12 @@ class Page {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getAllPagesExceptHome() {
+        $stmt = $this->db->prepare("SELECT * FROM pages WHERE friendly <> 'home'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function createPage($title, $friendly, $description) {
         $sqlQuery = $this->db->prepare("INSERT INTO pages (title, friendly, description) VALUES (:title, :friendly, :description)");
         $sqlQuery->bindParam(':title', $title);

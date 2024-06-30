@@ -32,7 +32,13 @@ spl_autoload_register(function ($class_name) {
 $model = new Page($db);
 $controller = new PageController($model);
 
-// Get page identifier from query string or friendly URL
+// Function to handle redirection
+function redirect($url) {
+    header("Location: $url");
+    exit;
+}
+
+// Handling requests
 if (isset($_GET['id'])) {
     $identifier = $_GET['id'];
     $controller->displayPage($identifier);
@@ -45,11 +51,10 @@ if (isset($_GET['id'])) {
     }
 } elseif ($_SERVER['REQUEST_URI'] === '/') {
     // Redirect to the friendly URL of the home page
-    header('Location: /home');
-    exit;
+    redirect('/home');
 } elseif ($_SERVER['REQUEST_URI'] === '/home') {
     $controller->displayHomePage();
 } else {
     // Handle invalid routes or unknown pages
-    $controller->displayPage('home'); // Default to home page
+    redirect('/home'); // Default to home page
 }
