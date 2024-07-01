@@ -30,7 +30,7 @@ Clone the project repository to your local machine:
 
 ```sh
 git clone https://github.com/vladyslavdobychin/uran-task-1.git
-cd uran-task-1.git
+cd uran-task-1
 ```
 
 ### 2. Start the Docker Containers
